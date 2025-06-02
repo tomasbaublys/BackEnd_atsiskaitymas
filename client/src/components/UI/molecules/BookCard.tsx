@@ -75,7 +75,7 @@ const BookCard = ({ book }: Props) => {
         <BookDate>Published: {book.publishDate}</BookDate>
       </div>
 
-      <ReadMore to={`/books/${book._id}`} target="_blank" rel="noopener noreferrer">
+      <ReadMore to={`/books/${book._id}`}>
         Read more
       </ReadMore>
     </Card>
