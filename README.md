@@ -1,6 +1,6 @@
 # Instrukcijos
 
-1. Parsisiųsti ir išarchyvuoti .zip failą.
+1. Parsisiųsti failą arba klonuoti direktoriją.
 2. 'server' aplanke susikurti '.env' failą ir įklijuoti savo MongoDB duomenis:
 
 PORT=
