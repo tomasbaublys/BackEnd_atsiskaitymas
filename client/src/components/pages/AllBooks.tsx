@@ -24,6 +24,10 @@ const Title = styled.h2`
 const PageLayout = styled.div`
   display: flex;
   gap: 2rem;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const Sidebar = styled.aside`
@@ -37,6 +41,11 @@ const Sidebar = styled.aside`
   top: 2rem;
   align-self: flex-start;
   height: fit-content;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    position: static;
+  }
 `;
 
 const MainContent = styled.main`
@@ -61,12 +70,12 @@ const AllBooks = () => {
 
   return (
     <PageWrapper>
-      <Title>All Books</Title>
+      <Title>All Books ({books.length})</Title>
       <PageLayout>
         <Sidebar>
           <h3>Filter</h3>
           <BookFilter />
-          <hr style={{ margin: '1rem 0', borderColor: '#333' }} />
+          <hr style={{ margin: "1rem 0", borderColor: "#333" }} />
           <h3>Sort</h3>
           <BookSort />
         </Sidebar>
