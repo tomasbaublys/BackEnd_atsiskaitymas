@@ -52,9 +52,13 @@ const Image = styled.img`
 `;
 
 const LoadingMessage = styled.div`
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
   font-size: 1.2rem;
   color: #ccc;
+  text-align: center;
 `;
 
 const BookDetails = () => {
@@ -63,6 +67,7 @@ const BookDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(`http://localhost:5500/books/${_id}`)
       .then((res) => res.json())
       .then((data: Book) => {
@@ -75,7 +80,7 @@ const BookDetails = () => {
       });
   }, [_id]);
 
-  if (isLoading) return <LoadingMessage>Loading...</LoadingMessage>;
+  if (isLoading) return <LoadingMessage>Loading book details...</LoadingMessage>;
   if (!book) return <LoadingMessage>Book not found.</LoadingMessage>;
 
   return (

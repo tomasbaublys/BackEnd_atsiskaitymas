@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
-import BooksContext from "../../../contexts/BooksContext"; // adjust path if needed
+import BooksContext from "../../../contexts/BooksContext";
 
 const HeaderWrapper = styled.header`
   background-color: #121212;

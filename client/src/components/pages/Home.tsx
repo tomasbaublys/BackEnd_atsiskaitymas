@@ -3,7 +3,6 @@ import styled from "styled-components";
 import BookContext from "../../contexts/BooksContext";
 import { BookContextType } from "../../types";
 import BookCard from "../UI/molecules/BookCard";
-import CircularProgress from "@mui/material/CircularProgress";
 
 const PageWrapper = styled.div`
   max-width: 1200px;
@@ -22,6 +21,8 @@ const Title = styled.h1`
 const PageLayout = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: 65vh;
 `;
 
 const MainContent = styled.main`
@@ -34,31 +35,30 @@ const BookList = styled.div`
   gap: 20px;
 `;
 
-const LoaderWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
+const Message = styled.p`
+  color: white;
+  text-align: center;
+  font-size: 1rem;
 `;
 
 const Home = () => {
-  const { books } = useContext(BookContext) as BookContextType;
-  const isLoading = books.length === 0;
+  const { books, loading } = useContext(BookContext) as BookContextType;
 
   return (
     <PageWrapper>
       <Title>Welcome to our Book Review site</Title>
       <PageLayout>
         <MainContent>
-          {isLoading ? (
-            <LoaderWrapper>
-              <CircularProgress sx={{ color: "#f5c518" }} />
-            </LoaderWrapper>
-          ) : (
+          {loading ? (
+            <Message>Loading books...</Message>
+          ) : books.length > 0 ? (
             <BookList>
               {books.slice(0, 4).map((book) => (
                 <BookCard key={book._id} book={book} />
               ))}
             </BookList>
+          ) : (
+            <Message>No books were found...</Message>
           )}
         </MainContent>
       </PageLayout>
