@@ -38,7 +38,17 @@ const BooksProvider = ({ children }: ChildrenElementProp) => {
   };
 
   const applySort = (sortValue: string) => {
-    sortQueryRef.current = `sort_rating=${sortValue}`;
+    if (sortValue === "ratingAsc") {
+      sortQueryRef.current = "sort_rating=1";
+    } else if (sortValue === "ratingDesc") {
+      sortQueryRef.current = "sort_rating=-1";
+    } else if (sortValue === "yearAsc") {
+      sortQueryRef.current = "sort_publishDate=1";
+    } else if (sortValue === "yearDesc") {
+      sortQueryRef.current = "sort_publishDate=-1";
+    } else {
+      sortQueryRef.current = "";
+    }
     fetchBooks();
   };
 
@@ -68,10 +78,10 @@ const BooksProvider = ({ children }: ChildrenElementProp) => {
   }, []);
 
   return (
-    <BooksContext.Provider 
-      value={{ 
-        books, 
-        applySort, 
+    <BooksContext.Provider
+      value={{
+        books,
+        applySort,
         applyFilter,
         resetFilters
       }}>
