@@ -51,7 +51,7 @@ const Button = styled.button`
 `;
 
 const BookFilter = () => {
-  const { books, applyFilter } = useContext(BooksContext)!;
+  const { books, applyFilter, resetFilters } = useContext(BooksContext)!;
 
   const { minYear, maxYear } = useMemo(() => {
     const years = books
@@ -89,11 +89,7 @@ const BookFilter = () => {
       publishDate_lte: defaultRange.current.max,
       inStock: false,
     });
-    applyFilter({
-      publishDate_gte: `${defaultRange.current.min}-01-01`,
-      publishDate_lte: `${defaultRange.current.max}-12-31`,
-      inStock: false,
-    });
+    resetFilters();
   };
 
   return (

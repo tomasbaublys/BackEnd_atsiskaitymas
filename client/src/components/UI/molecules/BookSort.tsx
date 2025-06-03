@@ -34,13 +34,16 @@ const BookSort = () => {
 
   return (
     <Container>
-      <Heading>Sort by rating:</Heading>
+      <Heading>Sort by:</Heading>
       <Select onChange={handleChange}>
-        <Option value="-1">Highest first ↑</Option>
-        <Option value="1">Lowest first ↓</Option>
+        <Option value="ratingDesc">Rating: Highest first ↑</Option>
+        <Option value="ratingAsc">Rating: Lowest first ↓</Option>
+        <Option value="yearDesc">Year: Newest first ↑</Option>
+        <Option value="yearAsc">Year: Oldest first ↓</Option>
       </Select>
     </Container>
   );
 };
+
 
 export default BookSort;

@@ -5,7 +5,7 @@ const dynamicQuery = (reqQuery) => {
         filter: {},
         sort: {},
         skip: 0,
-        limit: 50
+        limit: 100
     }
     if (Object.keys(reqQuery).length) {
         Object.keys(reqQuery).forEach(key => {

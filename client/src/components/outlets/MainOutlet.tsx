@@ -4,8 +4,7 @@ import styled from 'styled-components';
 import Header from "../UI/organisms/Header";
 import Footer from "../UI/organisms/Footer";
 
-const StyledMain = styled.section`
-    
+const StyledMain = styled.section`   
 `
 
 const MainOutlet = () => {
