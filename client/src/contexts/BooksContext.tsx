@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer, useRef } from "react";
+import { createContext, useEffect, useReducer, useRef, useState } from "react";
 import {
   Book,
   BookContextType,
@@ -21,20 +21,29 @@ const BooksContext = createContext<BookContextType | undefined>(undefined);
 
 const BooksProvider = ({ children }: ChildrenElementProp) => {
   const [books, dispatch] = useReducer(reducer, []);
+  const [loading, setLoading] = useState(true);
 
   const filterQueryRef = useRef('');
   const sortQueryRef = useRef('');
 
   const fetchBooks = () => {
+    setLoading(true);
     const query = [filterQueryRef.current, sortQueryRef.current]
       .filter(Boolean)
       .join("&");
+
     const url = `http://localhost:5500/books${query ? `?${query}` : ""}`;
 
     fetch(url)
       .then((res) => res.json())
-      .then((data: Book[]) => dispatch({ type: "setBooks", data }))
-      .catch((err) => console.error("Failed to fetch books:", err));
+      .then((data: Book[]) => {
+        dispatch({ type: "setBooks", data });
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to fetch books:", err);
+        setLoading(false);
+      });
   };
 
   const applySort = (sortValue: string) => {
@@ -83,8 +92,10 @@ const BooksProvider = ({ children }: ChildrenElementProp) => {
         books,
         applySort,
         applyFilter,
-        resetFilters
-      }}>
+        resetFilters,
+        loading,
+      }}
+    >
       {children}
     </BooksContext.Provider>
   );

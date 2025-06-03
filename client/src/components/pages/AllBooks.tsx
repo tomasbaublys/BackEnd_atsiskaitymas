@@ -5,7 +5,6 @@ import { BookContextType } from "../../types";
 import BookCard from "../UI/molecules/BookCard";
 import BookFilter from "../UI/molecules/BookFilter";
 import BookSort from "../UI/molecules/BookSort";
-import CircularProgress from "@mui/material/CircularProgress";
 
 const PageWrapper = styled.div`
   max-width: 1200px;
@@ -58,15 +57,14 @@ const BookList = styled.div`
   gap: 20px;
 `;
 
-const LoaderWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
+const Message = styled.p`
+  color: white;
+  text-align: center;
+  font-size: 1rem;
 `;
 
 const AllBooks = () => {
-  const { books } = useContext(BookContext) as BookContextType;
-  const isLoading = books.length === 0;
+  const { books, loading } = useContext(BookContext) as BookContextType;
 
   return (
     <PageWrapper>
@@ -81,16 +79,16 @@ const AllBooks = () => {
         </Sidebar>
 
         <MainContent>
-          {isLoading ? (
-            <LoaderWrapper>
-              <CircularProgress sx={{ color: "#f5c518" }} />
-            </LoaderWrapper>
-          ) : (
+          {loading ? (
+            <Message>Loading books...</Message>
+          ) : books.length > 0 ? (
             <BookList>
               {books.map((book) => (
                 <BookCard key={book._id} book={book} />
               ))}
             </BookList>
+          ) : (
+            <Message>No books were found...</Message>
           )}
         </MainContent>
       </PageLayout>
