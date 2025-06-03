@@ -11,8 +11,16 @@ export type Book = {
   imageUrl: string;
 };
 
+export type BooksContextValues = {
+  publishDate_gte?: string;
+  publishDate_lte?: string;
+  inStock?: boolean;
+};
+
 export type BookContextType = {
   books: Book[];
+  applyFilter: (values: BooksContextValues) => void;
+  applySort: (e: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
 export type BookContextReducerActions = 

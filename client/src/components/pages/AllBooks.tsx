@@ -1,8 +1,10 @@
 import { useContext } from "react";
 import styled from "styled-components";
-import BookContext from "../../contexts/BookContext";
+import BookContext from "../../contexts/BooksContext";
 import { BookContextType } from "../../types";
 import BookCard from "../UI/molecules/BookCard";
+import BookFilter from "../UI/molecules/BookFilter";
+import BookSort from "../UI/molecules/BookSort";
 import CircularProgress from "@mui/material/CircularProgress";
 
 const Wrapper = styled.main`
@@ -17,6 +19,13 @@ const Title = styled.h2`
   margin-bottom: 1rem;
   color: white;
   text-align: center;
+`;
+
+const Controls = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 `;
 
 const BookList = styled.div`
@@ -39,6 +48,11 @@ const AllBooks = () => {
   return (
     <Wrapper>
       <Title>All Books</Title>
+
+      <Controls>
+        <BookFilter />
+        <BookSort />
+      </Controls>
 
       {isLoading ? (
         <LoaderWrapper>
