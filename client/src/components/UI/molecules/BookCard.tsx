@@ -18,6 +18,14 @@ const Card = styled.div`
   justify-content: space-between;
 `;
 
+const Image = styled.img`
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.8rem;
+`;
+
 const BookTitle = styled.h3`
   font-size: 1.1rem;
   margin: 0 0 0.25rem 0;
@@ -45,6 +53,12 @@ const BookGenres = styled.div`
 const BookDate = styled.div`
   font-size: 0.75rem;
   color: #666;
+  margin-bottom: 0.25rem;
+`;
+
+const BookRating = styled.div`
+  font-size: 0.8rem;
+  color: #ffcc00;
   margin-bottom: 1rem;
 `;
 
@@ -68,11 +82,13 @@ const BookCard = ({ book }: Props) => {
   return (
     <Card>
       <div>
+        {book.imageUrl && <Image src={book.imageUrl} alt={book.title} />}
         <BookTitle>{book.title}</BookTitle>
         <BookDescription>{book.description.slice(0, 100)}...</BookDescription>
         <BookAuthor>Author: {book.author}</BookAuthor>
         <BookGenres>Genres: {book.genres.join(", ")}</BookGenres>
         <BookDate>Published: {book.publishDate}</BookDate>
+        <BookRating>Rating: {book.rating}</BookRating>
       </div>
 
       <ReadMore to={`/books/${book._id}`}>

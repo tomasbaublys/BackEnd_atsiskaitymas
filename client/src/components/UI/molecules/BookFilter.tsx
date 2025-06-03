@@ -1,4 +1,4 @@
-import { useFormik } from 'formik';
+import { useFormik } from "formik";
 import { useContext, useMemo, useRef } from "react";
 import styled from "styled-components";
 import BooksContext from "../../../contexts/BooksContext";
@@ -6,8 +6,15 @@ import BooksContext from "../../../contexts/BooksContext";
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
   color: white;
+`;
+
+const FieldBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  margin-bottom: 10px;
 `;
 
 const Label = styled.label`
@@ -17,7 +24,9 @@ const Label = styled.label`
 const Input = styled.input`
   padding: 0.3rem;
   border-radius: 4px;
-  border: 1px solid #ccc;
+  border: 1px solid #555;
+  background-color: #1f1f1f;
+  color: white;
 `;
 
 const CheckboxLabel = styled.label`
@@ -41,21 +50,20 @@ const Button = styled.button`
   }
 `;
 
-const ButtonRow = styled.div`
-  display: flex;
-  gap: 0.5rem;
-`;
-
 const BookFilter = () => {
   const { books, applyFilter } = useContext(BooksContext)!;
 
   const { minYear, maxYear } = useMemo(() => {
     const years = books
-      .map(book => new Date(book.publishDate).getFullYear())
-      .filter(year => !isNaN(year));
-    const min = years.length ? Math.min(...years) : 1900;
-    const max = years.length ? Math.max(...years) : new Date().getFullYear();
-    return { minYear: min, maxYear: max };
+      .map((book) => new Date(book.publishDate).getFullYear())
+      .filter((year) => !isNaN(year));
+    if (years.length === 0) {
+      return { minYear: 1900, maxYear: new Date().getFullYear() };
+    }
+    return {
+      minYear: Math.min(...years),
+      maxYear: Math.max(...years),
+    };
   }, [books]);
 
   const defaultRange = useRef({ min: minYear, max: maxYear });
@@ -75,24 +83,23 @@ const BookFilter = () => {
     },
   });
 
-  const handleClear = () => {
-    const resetValues = {
+  const handleReset = () => {
+    formik.setValues({
       publishDate_gte: defaultRange.current.min,
       publishDate_lte: defaultRange.current.max,
       inStock: false,
-    };
-    formik.setValues(resetValues);
+    });
     applyFilter({
-      publishDate_gte: `${resetValues.publishDate_gte}-01-01`,
-      publishDate_lte: `${resetValues.publishDate_lte}-12-31`,
+      publishDate_gte: `${defaultRange.current.min}-01-01`,
+      publishDate_lte: `${defaultRange.current.max}-12-31`,
       inStock: false,
     });
   };
 
   return (
     <Form onSubmit={formik.handleSubmit}>
-      <div>
-        <Label htmlFor="publishDate_gte">Leidimo metai nuo:</Label>
+      <FieldBlock>
+        <Label htmlFor="publishDate_gte">Publication year from:</Label>
         <Input
           type="number"
           id="publishDate_gte"
@@ -102,10 +109,10 @@ const BookFilter = () => {
           onChange={formik.handleChange}
           value={formik.values.publishDate_gte}
         />
-      </div>
+      </FieldBlock>
 
-      <div>
-        <Label htmlFor="publishDate_lte">Leidimo metai iki:</Label>
+      <FieldBlock>
+        <Label htmlFor="publishDate_lte">Publication year to:</Label>
         <Input
           type="number"
           id="publishDate_lte"
@@ -115,7 +122,7 @@ const BookFilter = () => {
           onChange={formik.handleChange}
           value={formik.values.publishDate_lte}
         />
-      </div>
+      </FieldBlock>
 
       <CheckboxLabel>
         <Input
@@ -124,13 +131,15 @@ const BookFilter = () => {
           onChange={formik.handleChange}
           checked={formik.values.inStock}
         />
-        Tik turimas knygas
+        Only available books
       </CheckboxLabel>
 
-      <ButtonRow>
-        <Button type="submit">Filtruoti</Button>
-        <Button type="button" onClick={handleClear}>Išvalyti</Button>
-      </ButtonRow>
+      <div style={{ display: "flex", gap: "1rem" }}>
+        <Button type="submit">Apply filter</Button>
+        <Button type="button" onClick={handleReset}>
+          Reset filter
+        </Button>
+      </div>
     </Form>
   );
 };

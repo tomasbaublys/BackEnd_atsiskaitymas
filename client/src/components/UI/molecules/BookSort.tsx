@@ -11,27 +11,34 @@ const Heading = styled.h4`
   margin-bottom: 0.5rem;
 `;
 
-const SortButton = styled.button`
-  background-color: #f5c518;
+const Select = styled.select`
   padding: 0.3rem 0.6rem;
-  margin-right: 0.5rem;
   border-radius: 4px;
-  border: none;
+  border: 1px solid #555;
+  background-color: #1f1f1f;
+  color: white;
   cursor: pointer;
+`;
 
-  &:hover {
-    background-color: #e4b700;
-  }
+const Option = styled.option`
+  background-color: #1f1f1f;
+  color: white;
 `;
 
 const BookSort = () => {
   const { applySort } = useContext(BooksContext)!;
 
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    applySort(e.target.value);
+  };
+
   return (
     <Container>
-      <Heading>Rikiavimas pagal reitingą:</Heading>
-      <SortButton value="1" onClick={applySort}>Aukščiausias pirmas ↑</SortButton>
-      <SortButton value="-1" onClick={applySort}>Žemiausias pirmas ↓</SortButton>
+      <Heading>Sort by rating:</Heading>
+      <Select onChange={handleChange}>
+        <Option value="-1">Highest first ↑</Option>
+        <Option value="1">Lowest first ↓</Option>
+      </Select>
     </Container>
   );
 };

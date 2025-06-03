@@ -37,8 +37,7 @@ const BooksProvider = ({ children }: ChildrenElementProp) => {
       .catch((err) => console.error("Failed to fetch books:", err));
   };
 
-  const applySort = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const sortValue = (e.target as HTMLButtonElement).value;
+  const applySort = (sortValue: string) => {
     sortQueryRef.current = `sort_rating=${sortValue}`;
     fetchBooks();
   };
