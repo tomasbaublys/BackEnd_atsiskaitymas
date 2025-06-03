@@ -58,6 +58,11 @@ const BooksProvider = ({ children }: ChildrenElementProp) => {
     fetchBooks();
   };
 
+  const resetFilters = () => {
+    filterQueryRef.current = '';
+    fetchBooks();
+  };
+
   useEffect(() => {
     fetchBooks();
   }, []);
@@ -67,7 +72,8 @@ const BooksProvider = ({ children }: ChildrenElementProp) => {
       value={{ 
         books, 
         applySort, 
-        applyFilter
+        applyFilter,
+        resetFilters
       }}>
       {children}
     </BooksContext.Provider>

@@ -21,6 +21,7 @@ export type BookContextType = {
   books: Book[];
   applyFilter: (values: BooksContextValues) => void;
   applySort: (sortValue: string) => void;
+  resetFilters: () => void;
 };
 
 export type BookContextReducerActions = 
